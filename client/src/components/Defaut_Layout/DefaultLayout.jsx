@@ -7,13 +7,19 @@ import {
   CustomerServiceOutlined,
   CopyOutlined,
   UnorderedListOutlined,
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
 import "./Default.Layout.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 const { Header, Sider, Content } = Layout;
 
 const DefaultLayout = ({ children }) => {
+  const navigate = useNavigate();
+  const cartItems = useSelector((state) => state.cartItems);
+  // console.log(cartItems);
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -91,6 +97,10 @@ const DefaultLayout = ({ children }) => {
               height: 64,
             }}
           />
+          <div className="cart-item-count" onClick={() => navigate("/cart")}>
+            <p>{cartItems.length}</p>
+            <ShoppingCartOutlined />
+          </div>
         </Header>
         <Content
           style={{

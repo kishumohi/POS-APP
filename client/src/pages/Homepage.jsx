@@ -9,7 +9,7 @@ import { Col, Row } from "antd";
 function Homepage() {
   // Declare Variable
   const [itemsData, setItemsData] = useState([]);
-  console.log(itemsData);
+  // console.log(itemsData);
   // Initial State Define and Data Get From API
   useEffect(() => {
     const getAllItems = async () => {
@@ -28,8 +28,8 @@ function Homepage() {
   return (
     <DefaultLayout>
       <Row>
-        {itemsData.map((item) => (
-          <Col xs={24} lg={6} md={12} sm={6}>
+        {itemsData.map((item, index) => (
+          <Col key={index} xs={24} lg={6} md={12} sm={6}>
             <ItemList item={item} />
           </Col>
         ))}
