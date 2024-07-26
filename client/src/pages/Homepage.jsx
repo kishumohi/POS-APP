@@ -11,7 +11,7 @@ import { HideLoading, ShowLoading } from "../redux/CartItemCount.js";
 function Homepage() {
   // Declare Variable
   const [itemsData, setItemsData] = useState([]);
-  console.log(itemsData);
+  // console.log(itemsData);
   const dispatch = useDispatch();
   // Initial State Define and Data Get From API
   const getAllItems = async () => {
@@ -26,7 +26,7 @@ function Homepage() {
   };
   useEffect(() => {
     getAllItems();
-  }, []);
+  }, [dispatch]);
 
   return (
     <DefaultLayout>
