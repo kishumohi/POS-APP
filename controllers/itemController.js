@@ -31,3 +31,13 @@ export const editItemController = async (req, res) => {
     res.status(400).send("Error in Item Edit", error);
   }
 };
+
+export const deleteItemController = async (req, res) => {
+  try {
+    const { itemid } = req.body;
+    await ItemModel.findOneAndDelete({ _id: itemid });
+    res.status(201).send("Item Deleted!");
+  } catch (error) {
+    res.status(400).send("Error in Item Delete", error);
+  }
+};

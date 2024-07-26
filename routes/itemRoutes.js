@@ -3,6 +3,7 @@ import {
   addItemController,
   getItemController,
   editItemController,
+  deleteItemController,
 } from "../controllers/itemController.js";
 
 const router = express.Router();
@@ -17,4 +18,8 @@ router.post("/add-item", addItemController);
 
 // Method - PUT
 router.put("/edit-item", editItemController);
+
+// Method - Delete
+router.post("/delete-item", deleteItemController);
+
 export default router;

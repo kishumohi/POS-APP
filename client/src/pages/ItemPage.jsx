@@ -25,6 +25,7 @@ function ItemPage() {
       setItemsData(data);
       dispatch(HideLoading());
     } catch (error) {
+      dispatch(HideLoading());
       console.log("Error From Get-Data From Server :- ", error);
     }
   };
@@ -48,13 +49,21 @@ function ItemPage() {
       render: (id, record) => (
         <div>
           <EditOutlined
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", fontSize: "20px", padding: "10px" }}
             onClick={() => {
               setEditItem(record);
               setPopupModel(true);
             }}
           />{" "}
-          <DeleteOutlined style={{ cursor: "pointer" }} />
+          <DeleteOutlined
+            style={{
+              cursor: "pointer",
+              fontSize: "20px",
+              padding: "10px",
+              color: "red",
+            }}
+            onClick={() => handleDelete(record)}
+          />
         </div>
       ),
     },
@@ -70,6 +79,7 @@ function ItemPage() {
         dispatch(HideLoading());
         setPopupModel(false);
       } catch (error) {
+        dispatch(HideLoading());
         message.success("Item Added Failed!!");
         console.log("Error From Post- Save Data From Server :- ", error);
       }
@@ -85,9 +95,25 @@ function ItemPage() {
         dispatch(HideLoading());
         setPopupModel(false);
       } catch (error) {
+        dispatch(HideLoading());
         message.success("Item Added Failed!!");
         console.log("Error From Post- Save Data From Server :- ", error);
       }
+    }
+  };
+  const handleDelete = async (record) => {
+    try {
+      dispatch(ShowLoading());
+      await axios.post("/api/items/delete-item", {
+        itemid: record._id,
+      });
+      message.success("Item Deleted Successfully");
+      getAllItems();
+      setPopupModel(false);
+    } catch (error) {
+      dispatch(HideLoading());
+      message.success("Item Deleted Failed!!");
+      console.log("Error From Deleted- Save Data From Server :- ", error);
     }
   };
   return (

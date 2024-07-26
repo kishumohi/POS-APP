@@ -21,6 +21,7 @@ function Homepage() {
       setItemsData(data);
       dispatch(HideLoading());
     } catch (error) {
+      dispatch(HideLoading());
       console.log("Error From Get-Data From Server :- ", error);
     }
   };
