@@ -22,3 +22,12 @@ export const addItemController = async (req, res) => {
     console.log(`Add-Item Controller Error :- ${error}`.bgRed.inverse);
   }
 };
+
+export const editItemController = async (req, res) => {
+  try {
+    await ItemModel.findOneAndUpdate({ _id: req.body.itemid }, req.body);
+    res.status(201).send("Item Updated!");
+  } catch (error) {
+    res.status(400).send("Error in Item Edit", error);
+  }
+};
