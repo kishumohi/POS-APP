@@ -5,23 +5,26 @@ import DefaultLayout from "../components/Defaut_Layout/DefaultLayout.jsx";
 import axios from "axios";
 import ItemList from "../components/ItemList/ItemList.jsx";
 import { Col, Row } from "antd";
+import { useDispatch } from "react-redux";
+import { HideLoading, ShowLoading } from "../redux/CartItemCount.js";
 
 function Homepage() {
   // Declare Variable
   const [itemsData, setItemsData] = useState([]);
-  // console.log(itemsData);
+  console.log(itemsData);
+  const dispatch = useDispatch();
   // Initial State Define and Data Get From API
-  useEffect(() => {
-    const getAllItems = async () => {
-      const { data } = await axios.get(
-        "http://localhost:8080/api/items/get-item"
-      );
+  const getAllItems = async () => {
+    try {
+      dispatch(ShowLoading());
+      const { data } = await axios.get("/api/items/get-item");
       setItemsData(data);
-      try {
-      } catch (error) {
-        console.log("Error From Get-Data From Server :- ", error);
-      }
-    };
+      dispatch(HideLoading());
+    } catch (error) {
+      console.log("Error From Get-Data From Server :- ", error);
+    }
+  };
+  useEffect(() => {
     getAllItems();
   }, []);
 

@@ -13,12 +13,14 @@ import { Button, Layout, Menu, theme } from "antd";
 import "./Default.Layout.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Spinner from "../Spinner.jsx";
 
 const { Header, Sider, Content } = Layout;
 
 const DefaultLayout = ({ children }) => {
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cartItems);
+  const loadingState = useSelector((state) => state.loading);
   // console.log(cartItems);
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -26,6 +28,7 @@ const DefaultLayout = ({ children }) => {
   } = theme.useToken();
   return (
     <Layout>
+      {loadingState && <Spinner />}
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical" />
         <h1 className="text-center text-light font-wight-bold">POS</h1>

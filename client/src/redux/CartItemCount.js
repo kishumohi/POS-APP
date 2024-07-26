@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
+  loading: false,
   cartItems: [],
 };
 const CounterSlice = createSlice({
@@ -48,8 +49,26 @@ const CounterSlice = createSlice({
         cartItems: SingleRecord,
       };
     },
+    ShowLoading: (state, action) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    HideLoading: (state, action) => {
+      return {
+        ...state,
+        loading: false,
+      };
+    },
   },
 });
-export const { updateCart, PulsItemCart, MinusItemCart, DeleteFromCart } =
-  CounterSlice.actions;
+export const {
+  updateCart,
+  PulsItemCart,
+  MinusItemCart,
+  DeleteFromCart,
+  ShowLoading,
+  HideLoading,
+} = CounterSlice.actions;
 export default CounterSlice.reducer;
