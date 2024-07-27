@@ -40,3 +40,35 @@ body {
   border: 2px solid green;
   background-color: aquamarine;
 }
+
+/************** register page ******************/
+
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.register input {
+  width: 400px !important;
+}
+
+.register-form {
+  padding: 20px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 255, 0.589) 0px 5px 15px;
+}
+.register-form h1 {
+  text-align: center;
+  color: rgba(0, 0, 255, 0.589);
+  padding: 10px;
+  background-color: rgba(89, 0, 255, 0.589);
+  border-radius: 10px;
+}
+.register h4 {
+  color: rgba(0, 0, 255, 0.589);
+  text-align: center;
+}
