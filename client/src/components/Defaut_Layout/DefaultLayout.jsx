@@ -71,11 +71,6 @@ const DefaultLayout = ({ children }) => {
               Items
             </Link>
           </Menu.Item>
-          <Menu.Item key="/customers" icon={<CustomerServiceOutlined />}>
-            <Link to="/customers" style={{ textDecoration: "none" }}>
-              Customers
-            </Link>
-          </Menu.Item>
           <Menu.Item
             key="logout"
             icon={<LogoutOutlined />}
