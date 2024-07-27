@@ -5,7 +5,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import "colors";
 import connectdb from "./config/db.js";
-import router from "./routes/itemRoutes.js";
+import itemrouter from "./routes/itemRoutes.js";
+import userrouter from "./routes/userRoutes.js";
 // dotenv config
 dotenv.config();
 
@@ -23,7 +24,8 @@ app.use(express.urlencoded({ extends: false }));
 app.use(morgan("dev"));
 
 // routes
-app.use("/api/items", router);
+app.use("/api/items", itemrouter);
+app.use("/api/users", userrouter);
 
 //port
 const PORT = process.env.PORT || 8080;

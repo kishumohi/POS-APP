@@ -1,11 +1,30 @@
-import { Button, Form, Input } from "antd";
-import React from "react";
-import { Link } from "react-router-dom";
+import { Button, Form, Input, message } from "antd";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { HideLoading, ShowLoading } from "../redux/CartItemCount.js";
+import axios from "axios";
 
 function Register() {
-  const handleSubmit = (value) => {
-    console.log(value);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleSubmit = async (value) => {
+    try {
+      dispatch(ShowLoading());
+      await axios.post("/api/users/register", value);
+      message.success("User Register Successfully!");
+      navigate("/login");
+      dispatch(HideLoading());
+    } catch (error) {
+      dispatch(HideLoading());
+      console.log("FRONT-Register_Page Error :- ", error);
+    }
   };
+  // currentry login user
+  useEffect(() => {
+    localStorage.getItem("auth");
+    navigate("/");
+  }, [navigate]);
   return (
     <div>
       <>
@@ -17,7 +36,7 @@ function Register() {
               <Form.Item name="name" label="Name">
                 <Input />
               </Form.Item>
-              <Form.Item name="userId" label="User ID">
+              <Form.Item name="userid" label="User ID">
                 <Input />
               </Form.Item>
               <Form.Item name="password" label="Password">
