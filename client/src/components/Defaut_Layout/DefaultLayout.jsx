@@ -76,10 +76,15 @@ const DefaultLayout = ({ children }) => {
               Customers
             </Link>
           </Menu.Item>
-          <Menu.Item key="logout" icon={<LogoutOutlined />}>
-            <Link to="/logout" style={{ textDecoration: "none" }}>
-              Logout
-            </Link>
+          <Menu.Item
+            key="logout"
+            icon={<LogoutOutlined />}
+            onClick={() => {
+              localStorage.removeItem("auth");
+              navigate("/login");
+            }}
+          >
+            Logout
           </Menu.Item>
         </Menu>
       </Sider>

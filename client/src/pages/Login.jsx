@@ -24,8 +24,10 @@ function Login() {
   };
   // currentry login user
   useEffect(() => {
-    localStorage.getItem("auth");
-    navigate("/");
+    if (localStorage.getItem("auth")) {
+      localStorage.getItem("auth");
+      navigate("/");
+    }
   }, [navigate]);
   return (
     <div>
