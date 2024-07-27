@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DefaultLayout from "../components/Defaut_Layout/DefaultLayout.jsx";
 import {
   DeleteOutlined,
@@ -6,7 +6,7 @@ import {
   MinusCircleOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { Table } from "antd";
+import { Button, Form, Input, Modal, Select, Table } from "antd";
 import {
   DeleteFromCart,
   MinusItemCart,
@@ -16,6 +16,9 @@ import {
 function CartPage() {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cartItems);
+  const [subTotal, setSubTotal] = useState(0);
+  const [billPopup, setBillPopup] = useState(false);
+
   //   console.log(cartItems);
   // handle function
   const handleIncrement = (record) => {
@@ -69,9 +72,70 @@ function CartPage() {
       ),
     },
   ];
+  useEffect(() => {
+    let temp = 0;
+    cartItems.forEach((item) => (temp = temp + item.price * item.quantity));
+    setSubTotal(temp);
+  }, [cartItems]);
+  // handle Function
+  const handleSubmit = (value) => {
+    console.log(value);
+  };
   return (
     <DefaultLayout>
       <Table columns={columns} dataSource={cartItems} bordered />
+      <div className="d-flex flex-column align-items-end">
+        <hr />
+        <h3>
+          SUBT TOTAL : <b>{subTotal} /-</b>
+        </h3>
+        <Button onClick={() => setBillPopup(true)}>Create Invoice</Button>
+      </div>
+      <Modal
+        title="Create Invoice"
+        visible={billPopup}
+        footer={false}
+        onCancel={() => setBillPopup(false)}
+      >
+        <Form
+          layout="vertical"
+          // initialValues={editItem}
+          onFinish={handleSubmit}
+        >
+          <Form.Item name="customerName" label="Customer Name">
+            <Input />
+          </Form.Item>
+          <Form.Item name="customerContact" label="Customer Number">
+            <Input />
+          </Form.Item>
+
+          <Form.Item name="paymentmode" label="Payment Methods">
+            <Select>
+              <Select.Option value="drinks">Cash</Select.Option>
+              <Select.Option value="rice">Card</Select.Option>
+            </Select>
+          </Form.Item>
+          <div className="bill-it">
+            <h5>
+              Sub Total : <b>{subTotal}</b>
+            </h5>
+            <h4>
+              Tax - <b>{((subTotal / 100) * 10).toFixed(2)}</b>
+            </h4>
+            <h3>
+              Grand Total -{" "}
+              <b>
+                {Number(subTotal) + Number(((subTotal / 100) * 10).toFixed(2))}
+              </b>
+            </h3>
+          </div>
+          <div className="d-flex justify-content-end">
+            <Button type="primary" htmlType="submit">
+              SAVE
+            </Button>
+          </div>
+        </Form>
+      </Modal>
     </DefaultLayout>
   );
 }
