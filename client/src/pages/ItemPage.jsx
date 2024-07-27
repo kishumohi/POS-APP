@@ -73,7 +73,7 @@ function ItemPage() {
     if (editItem === null) {
       try {
         dispatch(ShowLoading());
-        const res = await axios.post("/api/items/add-item", value);
+        await axios.post("/api/items/add-item", value);
         message.success("Item Added Successfully");
         getAllItems();
         dispatch(HideLoading());

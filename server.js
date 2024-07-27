@@ -7,6 +7,7 @@ import "colors";
 import connectdb from "./config/db.js";
 import itemrouter from "./routes/itemRoutes.js";
 import userrouter from "./routes/userRoutes.js";
+import billrouter from "./routes/billsRoutes.js";
 // dotenv config
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use(morgan("dev"));
 // routes
 app.use("/api/items", itemrouter);
 app.use("/api/users", userrouter);
+app.use("/api/bills", billrouter);
 
 //port
 const PORT = process.env.PORT || 8080;

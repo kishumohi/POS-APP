@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DefaultLayout from "../components/Defaut_Layout/DefaultLayout.jsx";
 import {
   DeleteOutlined,
@@ -6,18 +6,22 @@ import {
   MinusCircleOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Form, Input, Modal, Select, Table } from "antd";
+import { Button, Form, Input, message, Modal, Select, Table } from "antd";
 import {
   DeleteFromCart,
   MinusItemCart,
   PulsItemCart,
 } from "../redux/CartItemCount.js";
 
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 function CartPage() {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cartItems);
   const [subTotal, setSubTotal] = useState(0);
   const [billPopup, setBillPopup] = useState(false);
+  const navigate = useNavigate();
 
   //   console.log(cartItems);
   // handle function
@@ -78,8 +82,26 @@ function CartPage() {
     setSubTotal(temp);
   }, [cartItems]);
   // handle Function
-  const handleSubmit = (value) => {
-    console.log(value);
+  const handleSubmit = async (value) => {
+    try {
+      const newObject = {
+        ...value,
+        cartItems,
+        subTotal,
+        tax: Number(((subTotal / 100) * 10).toFixed(2)),
+        totalAmount: Number(
+          Number(subTotal) + Number(((subTotal / 100) * 10).toFixed(2))
+        ),
+        userid: JSON.parse(localStorage.getItem("auth"))._id,
+      };
+      await axios.post("http://localhost:8080/api/bills/add-bills", newObject);
+      message.success("Bill Generated.");
+      navigate("/bills");
+    } catch (error) {
+      console.log("FRONT-Bill Submit Error :- ", error);
+    }
+
+    // console.log(newObject);
   };
   return (
     <DefaultLayout>
@@ -105,14 +127,14 @@ function CartPage() {
           <Form.Item name="customerName" label="Customer Name">
             <Input />
           </Form.Item>
-          <Form.Item name="customerContact" label="Customer Number">
+          <Form.Item name="customerNumber" label="Customer Number">
             <Input />
           </Form.Item>
 
           <Form.Item name="paymentmode" label="Payment Methods">
             <Select>
-              <Select.Option value="drinks">Cash</Select.Option>
-              <Select.Option value="rice">Card</Select.Option>
+              <Select.Option value="cash">Cash</Select.Option>
+              <Select.Option value="card">Card</Select.Option>
             </Select>
           </Form.Item>
           <div className="bill-it">

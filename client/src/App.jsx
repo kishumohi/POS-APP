@@ -5,6 +5,8 @@ import ItemPage from "./pages/ItemPage.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import BillsPage from "./pages/BillsPage.jsx";
+import CustomerPage from "./pages/CustomerPage.jsx";
 
 function App() {
   return (
@@ -32,6 +34,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <CartPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/bills"
+            element={
+              <ProtectedRoute>
+                <BillsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/customers"
+            element={
+              <ProtectedRoute>
+                <CustomerPage />
               </ProtectedRoute>
             }
           />
