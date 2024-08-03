@@ -6,7 +6,7 @@ import CartPage from "./pages/CartPage.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import BillsPage from "./pages/BillsPage.jsx";
-import CustomerPage from "./pages/CustomerPage.jsx";
+// import CustomerPage from "./pages/CustomerPage.jsx";
 
 function App() {
   return (
@@ -47,11 +47,7 @@ function App() {
           />
           <Route
             path="/customers"
-            element={
-              <ProtectedRoute>
-                <CustomerPage />
-              </ProtectedRoute>
-            }
+            element={<ProtectedRoute>{/* <CustomerPage /> */}</ProtectedRoute>}
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
